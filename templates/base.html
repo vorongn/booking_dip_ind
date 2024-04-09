@@ -1,0 +1,343 @@
+{% load static %}
+{% load hotels_tag %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{{ title }}</title>
+    <!-- favicons Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'hotels/images/favicons/apple-touch-icon.png' %}"/>
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="{% static 'hotels/assets/images/favicons/favicon-32x32.png' %}"/>
+    <link rel="icon" type="image/png" sizes="16x16"
+          href="{% static 'hotels/assets/images/favicons/favicon-16x16.png' %}"/>
+    <link rel="manifest" href="{% static 'hotels/assets/images/favicons/site.webmanifest' %}"/>
+    <meta name="description"
+          content="Villoz is a modern HTML Template for accommodation, airbnb, booking, booking calendar, booking forms, commercial and residential, holiday booking, hotel booking, modern, rentals, reservation, responsive, room booking, travel agency, vacation rentals websites and businesses."/>
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+          rel="stylesheet">
+    <!-- reey font -->
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/reey-font/stylesheet.css' %}">
+
+
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/bootstrap/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/bootstrap-select/bootstrap-select.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/animate/animate.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/fontawesome/css/all.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/jquery-ui/jquery-ui.css' %}"/>
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/jarallax/jarallax.css' %}"/>
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/jquery-magnific-popup/jquery.magnific-popup.css' %}"/>
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/nouislider/nouislider.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/nouislider/nouislider.pips.css' %}"/>
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/tiny-slider/tiny-slider.css' %}"/>
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/villoz-icons/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/owl-carousel/css/owl.carousel.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'hotels/assets/vendors/owl-carousel/css/owl.theme.default.min.css' %}"/>
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="{% static 'hotels/assets/css/villoz.css' %}"/>
+</head>
+
+<body class="">
+
+<div class="custom-cursor__cursor"></div>
+<div class="custom-cursor__cursor-two"></div>
+
+<div class="preloader">
+    <div class="preloader__image" style="background-image: url({% static 'hotels/assets/images/loader.png ' %});"></div>
+</div>
+<!-- /.preloader -->
+<div class="page-wrapper">
+    <div class="main-header">
+        <div class="topbar-one">
+            <div class="container-fluid">
+                <div class="topbar-one__inner">
+                    <ul class="list-unstyled topbar-one__info">
+                        <li class="topbar-one__info__item">
+                            <i class="fas fa-map-marker topbar-one__info__icon"></i>
+                            <a href="https://www.google.com/maps">220047, ул. Байкальская, 43</a>
+                        </li>
+                        <li class="topbar-one__info__item">
+                            <i class="fas fa-envelope topbar-one__info__icon"></i>
+                            <a href="mailto:vorongn@gmail.com.com">needhelp@gns.by</a>
+                        </li>
+                        <li class="topbar-one__info__item">
+                            <i class="fas fa-phone-square topbar-one__info__icon"></i>
+                            <a href="tel:+375297752997">+ 375 (29) 7752997</a>
+                        </li>
+                    </ul><!-- /.list-unstyled topbar-one__info -->
+                    <div class="topbar-one__right">
+                        <ul class="list-unstyled topbar-one__menu">
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'users:profile' %}"> {{ user.username }} - {{ user.pk }}</a> | <a
+                                        href="{% url 'users:logout' %}">Выйти</a></li>
+
+
+                                    <li><a href="{% url 'add_hotel' %}">Добавить отель</a></li>
+                                    <li><a href="{% url 'add_room' %}">Добавить номер</a></li>
+                                    <li><a href="{% url 'get_my_book' %}">Мои заказы</a></li>
+
+
+                            {% else %}
+                                <li><a href="{% url 'users:login' %}">Войти</a></li>
+                                <li><a href="{% url 'users:register' %}">Регистрация</a></li>
+
+                            {% endif %}
+                        </ul><!-- /.list-unstyled topbar-one__menu -->
+                        <div class="topbar-one__social">
+                            <a href="https://twitter.com">
+                                <i class="fab fa-twitter" aria-hidden="true"></i>
+                                <span class="sr-only">Twitter</span>
+                            </a>
+                            <a href="https://facebook.com">
+                                <i class="fab fa-facebook" aria-hidden="true"></i>
+                                <span class="sr-only">Facebook</span>
+                            </a>
+                            <a href="https://instagram.com">
+                                <i class="fab fa-instagram" aria-hidden="true"></i>
+                                <span class="sr-only">Instagram</span>
+                            </a>
+                        </div><!-- /.topbar-one__social -->
+                    </div><!-- /.topbar-one__right -->
+                </div><!-- /.topbar-one__inner -->
+            </div><!-- /.container-fluid -->
+        </div><!-- /.topbar-one -->
+
+
+        <header class="main-header__bottom sticky-header sticky-header--normal">
+            <div class="container-fluid">
+                <div class="main-header__logo">
+                    <a href="{% url 'home' %}"> <img src="{% static 'hotels/assets/images/logo-light.png ' %}"
+                                                     alt="gns.by" width="125">
+                    </a>
+                </div><!-- /.main-header__logo -->
+                <nav class="main-header__nav main-menu">
+                    <ul class="main-menu__list">
+                        <li class="dropdown">
+                                <a href="{% url 'home' %}">Выбери город</a>
+                                <ul>
+                                    {% if cat_selected == 0 or cat_selected is None %}
+                                    <li class="selected"><a href="">Все города</a></li>
+                                     {% else %}
+                                        <li><a href="{% url 'home' %}">Все города</a></li>
+                                    {% endif %}
+                                    {% show_categories cat_selected %}
+
+                                </ul>
+                            </li>
+                        {% for item in mainmenu %}
+                            <li><a href="{% url item.url_name %}">{{ item.title }}</a></li>
+                        {% endfor %}
+
+                    </ul>
+
+                </nav><!-- /.main-header__nav -->
+                <div class="main-header__right">
+                    <div class="mobile-nav__btn mobile-nav__toggler">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div><!-- /.mobile-nav__toggler -->
+                    {#                    <a href="contact.html" class="villoz-btn villoz-btn--border main-header__btn">#}
+                    {#                        <i>Забронировать</i>#}
+                    {#                        <span>Забронировать</span>#}
+                    {#                    </a><!-- /.thm-btn main-header__btn -->#}
+                    {#                    <a href="#" class="search-toggler main-header__search">#}
+                    {#                        <i class="icon-magnifying-glass" aria-hidden="true"></i>#}
+                    {#                        <span class="sr-only">Поиск</span>#}
+                    {#                    </a><!-- /.search-toggler -->#}
+
+                </div><!-- /.main-header__right -->
+            </div><!-- /.container-fluid -->
+        </header><!-- /.main-header__bottom -->
+
+
+    </div><!-- /.main-header -->
+    <section class="page-header">
+        <div class="page-header__bg"></div>
+        <!-- /.page-header__bg -->
+
+        <div class="container">
+            <h1 class="page-header__title">{{ title }}</h1>
+        </div><!-- /.container -->
+    </section><!-- /.page-header -->
+
+
+                {% block content %}
+
+                {% endblock %}
+
+                {% block navigation %}
+
+                {% endblock %}
+
+                <footer class="main-footer background-black">
+                    <div class="main-footer__bg background-black"
+                         style="background-image: url({% static 'hotels/assets/images/backgrounds/footer-bg-1.jpg ' %});"></div>
+                    <!-- /.main-footer__bg -->
+                    <div class="main-footer__top">
+                        <div class="container">
+                            <a href="index.html" class="main-footer__logo">
+                                <img src="{% static 'hotels/assets/images/logo-light.png ' %}" width="125"
+                                     alt="">
+                            </a>
+                            <div class="main-footer__social">
+                                <a href="https://twitter.com">
+                                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                                    <span class="sr-only">Twitter</span>
+                                </a>
+                                <a href="https://facebook.com">
+                                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                                    <span class="sr-only">Facebook</span>
+                                </a>
+                                <a href="https://pinterest.com">
+                                    <i class="fab fa-pinterest-p" aria-hidden="true"></i>
+                                    <span class="sr-only">Pinterest</span>
+                                </a>
+                                <a href="https://instagram.com">
+                                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                                    <span class="sr-only">Instagram</span>
+                                </a>
+                            </div><!-- /.main-footer__social -->
+                        </div><!-- /.container -->
+                    </div><!-- /.main-footer__top -->
+                    <div class="main-footer__bottom">
+                        <div class="container">
+                            <div class="main-footer__bottom__inner">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-7">
+
+                                    </div><!-- /.col-md-12 col-lg-7 -->
+                                    <div class="col-md-6 col-lg-2">
+                                        <div class="footer-widget footer-widget--links">
+                                            <ul class="list-unstyled footer-widget__links">
+                                                {% for item in mainmenu %}
+                                                    <li><a href="{% url item.url_name %}">{{ item.title }}</a></li>
+                                                {% endfor %}
+                                            </ul><!-- /.list-unstyled footer-widget__links -->
+                                        </div><!-- /.footer-widget footer-widget--links -->
+                                    </div><!-- /.col-md-6 -->
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="footer-widget footer-widget--contact">
+                                            <p class="footer-widget__text">220047, Минск, Байкальская, 43</p>
+                                            <!-- /.footer-widget__text -->
+                                            <ul class="list-unstyled footer-widget__contact">
+                                                <li><a href="mailto:company@gns.by">company@gns.by</a></li>
+                                                <li><a href="tel:+375297752997">+375 (29) 7752997</a></li>
+                                            </ul><!-- /.list-unstyled footer-widget__links -->
+                                        </div><!-- /.footer-widget footer-widget--links -->
+                                    </div><!-- /.col-md-6 -->
+                                </div><!-- /.row -->
+                            </div><!-- /.main-footer__inner -->
+                        </div><!-- /.container -->
+                    </div><!-- /.main-footer__bottom -->
+                </footer><!-- /.main-footer -->
+
+            </div><!-- /.page-wrapper -->
+
+
+            <div class="mobile-nav__wrapper">
+                <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+                <!-- /.mobile-nav__overlay -->
+                <div class="mobile-nav__content">
+                    <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
+
+                    <div class="logo-box">
+                        <a href="index.html" aria-label="logo image"><img
+                                src="{% static 'hotels/assets/images/logo-light.png ' %}"
+                                width="155" alt=""/></a>
+                    </div>
+                    <!-- /.logo-box -->
+                    <div class="mobile-nav__container"></div>
+                    <!-- /.mobile-nav__container -->
+
+                    <ul class="mobile-nav__contact list-unstyled">
+                        <li>
+                            <i class="fa fa-envelope"></i>
+                            <a href="mailto:needhelp@gns.by">needhelp@gns.by</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-phone-alt"></i>
+                            <a href="tel:+375297752997">+375(29)7752997</a>
+                        </li>
+                    </ul><!-- /.mobile-nav__contact -->
+                    <div class="mobile-nav__social">
+                        <a href="https://twitter.com">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                            <span class="sr-only">Twitter</span>
+                        </a>
+                        <a href="https://facebook.com">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                            <span class="sr-only">Facebook</span>
+                        </a>
+                        <a href="https://pinterest.com">
+                            <i class="fab fa-pinterest-p" aria-hidden="true"></i>
+                            <span class="sr-only">Pinterest</span>
+                        </a>
+                        <a href="https://instagram.com">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                            <span class="sr-only">Instagram</span>
+                        </a>
+                    </div><!-- /.mobile-nav__social -->
+                </div>
+                <!-- /.mobile-nav__content -->
+            </div>
+            <!-- /.mobile-nav__wrapper -->
+            <div class="search-popup">
+                <div class="search-popup__overlay search-toggler"></div>
+                <!-- /.search-popup__overlay -->
+                <div class="search-popup__content">
+                    <form role="search" method="get" class="search-popup__form" action="#">
+                        <input type="text" id="search" placeholder="Search Here..."/>
+                        <button type="submit" aria-label="search submit" class="villoz-btn villoz-btn--base">
+                            <i><i class="icon-magnifying-glass"></i></i>
+                            <span><i class="icon-magnifying-glass"></i></span>
+                        </button>
+                    </form>
+                </div>
+                <!-- /.search-popup__content -->
+            </div>
+            <!-- /.search-popup -->
+
+
+            <a href="#" class="scroll-top">
+                <svg class="scroll-top__circle" width="100%" height="100%" viewBox="-1 -1 102 102">
+                    <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                </svg>
+            </a>
+
+
+            <script src="{% static 'hotels/assets/vendors/jquery/jquery-3.7.0.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/bootstrap/js/bootstrap.bundle.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/bootstrap-select/bootstrap-select.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/jarallax/jarallax.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/jquery-ui/jquery-ui.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/jquery-appear/jquery.appear.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/jquery-validate/jquery.validate.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/nouislider/nouislider.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/tiny-slider/tiny-slider.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/wnumb/wNumb.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/owl-carousel/js/owl.carousel.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/wow/wow.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/tilt/tilt.jquery.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/simpleParallax/simpleParallax.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/imagesloaded/imagesloaded.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/isotope/isotope.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/countdown/countdown.min.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/jquery-circleType/jquery.circleType.js ' %}"></script>
+            <script src="{% static 'hotels/assets/vendors/jquery-lettering/jquery.lettering.min.js ' %}"></script>
+            <!-- template js -->
+            <script src="{% static 'hotels/assets/js/villoz.js ' %}"></script>
+</body>
+
+</html>

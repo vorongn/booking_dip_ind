@@ -1,0 +1,15 @@
+{% extends '.\base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <h1>Добро пожаловать</h1>
+    <section class="login-page">
+        <div class="container">
+            <div class="row">
+                <p>Вы успешно зарегестрировались на сайте! Для входа необходимо авторизироваться!!!!</p>
+                <a href="{% url 'users:login' %}">Войти</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,6 @@
+<h2>Добавить новый комментарий</h2>
+<form action="{% url "post_comment" hotel.slug room.slug %}" method="post">
+{{ form2.as_p }}
+{% csrf_token %}
+<p><input type="submit" value="Добавить комментарий"></p>
+</form>

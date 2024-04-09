@@ -1,0 +1,149 @@
+{% extends '.\base.html' %}
+{% load static %}
+{% block content %}
+            <section class="villa-page">
+        <div class="container tabs-box">
+        <div class="row">
+            <div class="col-lg-12">
+            <div class="villa-page__info-top">
+                <ul class="villa-page__nav tab-buttons list-unstyled">
+                    <li data-tab="#list" class="tab-btn "><span class="icon-list"></span></li>
+                    <li data-tab="#grid" class="tab-btn active-btn"><span class="icon-grid"></span></li>
+                </ul>
+            </div>
+            <div class="tabs-content">
+                <div class="tab" id="list">
+                    <div class="row gutter-y-30">
+                        {% for hotel in hotels %}
+                            <div class="col-lg-12">
+                                <div class="villa-card-list villa-card-list--full-width wow fadeInUp"
+                                     data-wow-delay="100ms">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-lg-5">
+                                            <div class="villa-card-list__image">
+                                                {% if hotel.logo_hotel %}
+                                                    <img src="{{ hotel.logo_hotel.url }}" alt='{{ hotel.title }}'/>
+                                                {% else %}
+                                                    <img src="{% static 'hotels/images/nofoto.png' %}"
+                                                         alt='{{ hotel.title }}'/>
+                                                {% endif %}
+                                                {% if hotel.recomended %}
+                                                    <div class="villa-card-list__flash">
+                                                        <p class="villa-card-list__flash__label feature">Рекомендуем</p>
+                                                    </div>
+                                                {% endif %}
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <div class="villa-card-list__content">
+                                                <div class="villa-card-list__ratings">
+                                                    {% for _ in ''|ljust:hotel.rating %}
+                                                        <i class="fa fa-star"></i>
+                                                    {% endfor %}
+                                                </div>
+
+
+                                                <p class="villa-card-list__address">
+                                                    <span class="icon-map"> </span>
+                                                    {{ hotel.location_city }}, {{ hotel.location_strit }}, {{ hotel.location_building }}
+                                                </p>
+
+                                                <h3 class="villa-card-list__title">
+                                                    <a href="{{ hotel.get_absolute_url }}">{{ hotel.title }}</a></h3>
+
+                                                <p>{{ hotel.short_desc }}</p>
+                                                <ul class="list-unstyled villa-card-list__meta">
+                                                    <li><span class="icon-users"></span>{{ hotel.room_count }} номеров
+                                                    </li>
+
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- вид2 -->
+                <div class="tab active-tab" id="grid">
+                    <div class="row gutter-y-30">
+                        {% for hotel in hotels %}
+                            <div class="col-lg-4 col-md-6">
+                                <div class="villa-card wow fadeInUp" data-wow-delay="100ms">
+                                    <div class="villa-card__image">
+                                        {% if hotel.logo_hotel %}
+                                            <img src="{{ hotel.logo_hotel.url }}" alt='{{ hotel.title }}'/>
+                                        {% else %}
+                                            <img src="{% static 'hotels/images/nofoto.png' %}" alt='{{ hotel.title }}'/>
+                                        {% endif %}
+                                        {% if hotel.recomended %}
+                                            <div class="villa-card__flash">
+                                                <p class="villa-card__flash__label feature">Рекомендуем</p>
+                                            </div><!-- /.villa-card__label -->
+                                        {% endif %}
+
+                                    </div><!-- /.villa-card__image -->
+                                    <div class="villa-card__content">
+                                        <div class="villa-card__ratings">
+                                            {% for _ in ''|ljust:hotel.rating %}
+                                                <i class="fa fa-star"></i>
+                                            {% endfor %}
+                                        </div>
+                                        <p class="villa-card__address">{{ hotel.location_city }}, {{ hotel.location_strit }}, {{ hotel.location_building }}</p>
+                                        <h3 class="villa-card__title"><a
+                                                href="{{ hotel.get_absolute_url }}">{{ hotel.title }}</a></h3>
+
+                                        <ul class="list-unstyled villa-card__meta">
+                                            <li><span class="icon-users"></span>{{ hotel.room_count }} номеров</li>
+                                        </ul><!-- /.list-unstyled villa-card__meta -->
+                                    </div><!-- /.villa-card__content -->
+                                </div><!-- /.villa-card -->
+                            </div><!-- /.item -->
+                        {% endfor %}
+                    </div><!-- /.row -->
+                </div>
+
+            </div>
+            </div>
+        </div></div>
+    </section>
+
+
+{% endblock %}
+{% block navigation %}
+    {% if page_obj.has_other_pages %}
+        <section class="post-pagination">
+            <div class="container mt-0 mb-2">
+                <nav>
+                    <ul class="pagination post-pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a href="?page{{ page_obj.previous_page_number }}">&lt;</a>
+                            </li>
+                        {% endif %}
+                        {% for p in page_obj.paginator.page_range %}
+                            {% if page_obj.number == p %}
+                                <li class="active" aria-current="page">
+                                    <a class="">{{ p }}</a></li>
+                            {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                                <li class="page-item">
+                                    <a class="" href="?page={{ p }}">{{ p }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a href="?page{{ page_obj.next_page_number }}">&gt;</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}
+
+

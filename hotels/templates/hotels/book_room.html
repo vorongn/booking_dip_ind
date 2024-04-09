@@ -1,0 +1,25 @@
+{% extends '.\base.html' %}
+{% load static %}
+{% load my_filters %}
+
+
+
+{% block content %}
+
+
+    <section class="villa-details-three">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Уважаемый {{ user.username }}</p>
+                   <p>Вы успешно забронировали номер:</p>
+                   <p>Отель: {{ hotel.title }} <a href="{{ hotel.get_absolute_url }}">ПЕРЕЙТИ</a></p>
+                   <p>Номер: {{ room.title }} <a href="{{ room.get_absolute_url }}">Вернуться</a></p>
+
+                    <p>Посмотреть все мои заказы<a href="{% url 'get_my_book' %}">ПОСМОТРЕТЬ</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

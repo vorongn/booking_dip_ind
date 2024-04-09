@@ -1,0 +1,45 @@
+{% extends '.\base.html' %}
+{% load static %}
+{% load my_filters %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            {% now "Y-m-d" as todays_date %}
+            <p>Сегодня: {{ todays_date }}</p>
+            <p>Ваши активные заказы:</p>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Дата заказа</th>
+                    <th scope="col">Номер</th>
+                    <th scope="col">Заезд</th>
+                    <th scope="col">Выезд</th>
+                    <th scope="col">Ночей</th>
+                    <th scope="col">Стоимость</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in book %}
+                    {% if todays_date <= item.check_in|date:"Y-m-d" %}
+
+
+                        <tr>
+                            <th scope="row">{{ item.created_at }}</th>
+                            <td><a href="{{ item.room.get_absolute_url }}">{{ item.room }}</a></td>
+                            <td>{{ item.check_in }}</td>
+                            <td>{{ item.check_out }}</td>
+                            <td>{{ item.check_out|subtract_dates:item.check_in }}</td>
+                            <td>{{ item.check_out|subtract_dates:item.check_in|multiply:item.room.price_per_night }} Денег</td>
+                        </tr>
+                    {% endif %}
+
+
+                {% endfor %}
+                        </tbody>
+                        </table>
+
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <section class="villa-details-one">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-xl-5">
+                    <div class="villa-details-one__info">
+                        <p class="villa-details-one__address"><b>{{ hotel.title }}</b> / {{ hotel.location_city }}, {{ hotel.location_strit }}, {{ hotel.location_building }}</p>
+
+
+                        <h3 class="villa-details-one__title">{{ room.title }}</h3>
+                        <div class="villa-details-one__price-wrap">
+                            <div class="villa-details-one__price"> {{ room.price_per_night }} BYN <span
+                                    class="villa-details-one__price__shift">/ ночь</span></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-xl-7">
+                    <div class="villa-details-one__meta">
+                        <div class="villa-details-one__meta__item">
+                            <div class="villa-details-one__meta__icon"><span class="icon-bed"></span></div>
+                            <h5 class="villa-details-one__meta__number">{{ room.bads }}</h5>
+                            <p class="villa-details-one__meta__name">Кроватей</p>
+                        </div><!-- meta-item -->
+                        <div class="villa-details-one__meta__item">
+                            <div class="villa-details-one__meta__icon"><span class="icon-bath"></span></div>
+                            <h5 class="villa-details-one__meta__number">{{ room.baths }}</h5>
+                            <p class="villa-details-one__meta__name">Санузлов</p>
+                        </div><!-- meta-item -->
+                        <div class="villa-details-one__meta__item">
+                            <div class="villa-details-one__meta__icon"><span class="icon-guests"></span></div>
+                            <h5 class="villa-details-one__meta__number">{{ room.max_guest }}</h5>
+                            <p class="villa-details-one__meta__name">Гостей</p>
+                        </div><!-- meta-item -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="villa-details-three">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+
+
+                    <div class="villa-details-three__gallery">
+                        <div class="villa-details-three__gallery__carousel villoz-owl__carousel owl-carousel owl-theme"
+                             data-owl-options='{
+                        "items": 1,
+                        "margin": 0,
+                        "loop": true,
+                        "smartSpeed": 700,
+                        "animateOut": "slideOutDown",
+                        "autoplayTimeout": 6000,
+                        "nav": true,
+                        "navText": ["<span class=\"icon-left-arrow\"></span>","<span class=\"icon-right-arrow\"></span>"],
+                        "dots": false,
+                        "autoplay": true
+                        }'>
+                            {% for img in photos %}
+                                <div class="item">
+                                    <div class="villa-details-three__gallery__image">
+                                        <img src="{{ img.image.url }}" alt="villa">
+                                    </div>
+
+                                </div>
+                            {% endfor %}<!-- gallery-item -->
+                        </div><!-- gallery-slider -->
+                        <div class="villa-details-three__gallery__btns">
+
+                            <a class="villoz-image-popup" href="#" data-gallery-options='
+
+                                {
+                            "items": [
+                        {% for img in photos %}
+                                {% if not forloop.last %}
+                                    {"src": "{{ img.image.url }}"},
+                                {% endif %}
+                            {% if forloop.last %}
+                                {"src": "{{ img.image.url }}"}
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                            ],
+                            "gallery": {
+                            "enabled": true
+                            },
+                            "type": "image"
+                        }'>
+                                <span class="icon-camera"></span><span
+                                    class="villa-card-two__btns__count">{{ photos.count }}</span></a>
+                        </div>
+                    </div>
+
+
+                    <div class="villa-details-three__content">
+                        <h4 class="villa-details-three__content__title">Описание</h4>
+                        <p class="villa-details-three__content__text">
+                            {{ description }}
+                        </p>
+                    </div>
+
+                    <div class="villa-details-three__content">
+                        <h4 class="villa-details-three__content__title">Удобства</h4>
+                        <ul>
+                            <li>Кроватей в номере: {{ room.bads }}</li>
+                            <li>Санузлов в номере: {{ room.baths }}</li>
+                            <li>Максимальное количество гостей: {{ room.max_guest }}</li>
+                            {% if room.wifi %}
+                                <li> В номере бесплатный WI-FI</li>
+                            {% endif %}
+                            {% if room.parking %}
+                                <li>Парковочное место входит в стоимость</li>
+                            {% endif %}
+                        </ul>
+
+                    </div>
+
+                    <div class="villa-details-three__content">
+                        <h4 class="villa-details-three__content__title">{{ hotel.title }}</h4>
+                        <p class="villa-details-three__content__text">
+                            {{ hotel.description }}
+                        </p>
+                        <p class="villa-details-three__content__text">
+                            {{ hotel.location_city }}, {{ hotel.location_strit }}, {{ hotel.location_building }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="villa-details-sidebar">
+                        <div class="villa-details-sidebar__booking">
+                            <h4 class="villa-details-sidebar__booking__title">Забронировать</h4>
+                            {% if request.user.is_authenticated %}
+                                <form class="villa-details-sidebar__form" action="" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-errors"> {{ from.non_field_errors }} </div>
+                                    {% for f in form %}
+                                        <div class="mt-2">
+                                            <label for="{{ f.id_for_label }}"> {{ f.label }} </label> {{ f }}
+                                        </div>
+                                        <div class="form-errors"> {{ f.field_errors }} </div>
+                                    {% endfor %}
+
+                                    <div class="mt-2">
+                                        <button type="submit" class="villoz-btn">
+                                            <i>Забронировать</i>
+                                            <span>Забронировать</span>
+                                        </button>
+                                    </div>
+                                </form>
+
+
+                                <!-- -->
+                                {#                        <div class="row">#}
+                                {#                            <section class="">#}
+                                {#                                <div class="container">#}
+                                {#                                    <form action="" method="post">#}
+                                {#                                        {% csrf_token %}#}
+                                {#                                        {{ form.as_p }}#}
+                                {##}
+                                {#                                        <div>#}
+                                {#                                            <button type="submit" class="villoz-btn">#}
+                                {#                                                <i>Забронировать</i>#}
+                                {#                                                <span>Забронировать</span>#}
+                                {#                                            </button>#}
+                                {#                                        </div>#}
+                                {##}
+                                {#                                    </form>#}
+                                {##}
+                                {#                                </div>#}
+                                {#                            </section>#}
+                                {##}
+                                {#                        </div>#}
+
+                            {% else %}
+                                <div class="row">
+                                    <div class="container"><p>Бронирование доступно только зарегистрированным
+                                        пользователям</p>
+
+                                        <a href="{% url 'users:login' %}">Войти</a> /
+                                        <a href="{% url 'users:register' %}">Регистрация</a></div>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    {##}
+                    {#                    {% with comments.count as total_comments %}#}
+                    {#                        <h2>#}
+                    {#                            {{ total_comments }} комментариев#}
+                    {#                        </h2>#}
+                    {#                    {% endwith %}#}
+                    {#                    {% for comment in comments %}#}
+                    {#                        <div class="comment">#}
+                    {#                            <p class="info">#}
+                    {#                                Комментарий {{ forloop.counter }} от {{ comment.name }}#}
+                    {#                                {{ comment.created }}#}
+                    {#                            </p>#}
+                    {#                            {{ comment.body|linebreaks }}#}
+                    {#                        </div>#}
+                    {#                    {% empty %}#}
+                    {#                        <p>Нет комментариев.</p>#}
+                    {#                    {% endfor %}#}
+                    {#                    {% include "hotels/comment_form.html" %}#}
+                </div>
+            </div>
+            <!-- Отображение комментариев -->
+            {% with room.comments.count as total_comments %}
+                <div class="product-details__comment wow fadeInUp" data-wow-delay="400ms">
+                <h3 class="product-details__review-title">Комментариев: {{ total_comments }}</h3>
+            {% endwith %}
+            <!--Start Comment Box-->
+            {% for comment in room.comments.all %}
+                <div class="product-details__comment-box">
+                    <h4 class="product-details__comment-box__meta">{{ comment.author.username }}<span
+                            class="product-details__comment-box__date">{{ comment.created_date }}</span></h4>
+                    <!-- comment-meta -->
+                    <div class="product-details__comment-box__ratings">
+                        {{ comment.rating }}
+                        {% for _ in ''|ljust:comment.rating %}
+                            <i class="fa fa-star"></i>
+                        {% endfor %}
+                    </div><!-- comment-ratings -->
+
+                    <p class="product-details__comment-box__text">
+                        {{ comment.text }}
+                    </p>
+                </div>
+            {% endfor %}
+            <!--End Comment Box-->
+
+            </div>
+            <!-- /.product-comment -->
+
+
+            <!-- Форма для добавления комментария -->
+            <form method="post" class="comments-form__form contact-form-validated product-details__form__form form-one">
+                {% csrf_token %}
+                {{ form3.as_p }}
+                <div class="form-one__control form-one__control--full">
+                    <button type="submit" class="villoz-btn villoz-btn--base">
+                        <i>Оставить комментарий</i>
+                        <span>Оставить комментарий</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+            const lb = lightbox();
+        })
+
+
+        $('form').submit(function (e) {
+            e.preventDefault();
+
+    </script>
+
+
+
+
+
+
+{% endblock %}

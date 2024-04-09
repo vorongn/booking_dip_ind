@@ -1,0 +1,12 @@
+{% extends '.\base.html' %}
+{% load static %}
+
+{% block title %}Добавить комментарий{% endblock %}
+{% block content %}
+    {% if comment %}
+        <h2>Ваш комментарий был добавлен.</h2>
+        <p><a href="{{ room.get_absolute_url }}">Вернуться</a></p>
+    {% else %}
+        {% include "hotels/comment_form.html" %}
+    {% endif %}
+{% endblock %}

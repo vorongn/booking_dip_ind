@@ -1,0 +1,216 @@
+{% extends '.\base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <section class="villa-details-one">
+        <div class="container">
+            <!-- /.product-details -->
+            <div class="row">
+                <div class="col-lg-6 col-xl-6 wow fadeInLeft" data-wow-delay="200ms">
+                    <div class="product-details__img">
+
+                        {% if hotel.logo_hotel %}
+                            <a class="img-popup" href="{{ hotel.logo_hotel.url }}">
+                                <img src="{{ hotel.logo_hotel.url }}" alt="{{ hotel.title }}">
+                            </a><!-- /.product-image -->
+                        {% else %}
+                            <img src="{% static 'hotels/images/nofoto.png' %}"
+                                 alt='{{ hotel.title }}'/>
+                        {% endif %}
+
+                    </div>
+                </div><!-- /.column -->
+                <div class="col-lg-6 col-xl-6 wow fadeInRight" data-wow-delay="300ms">
+                    <div class="product-details__content">
+                        <div class="product-details__top">
+                            <h3 class="product-details__title">{{ hotel.title }}</h3><!-- /.product-title -->
+                        </div>
+                         <div class="villa-card-list__ratings">
+                                                    {% for _ in ''|ljust:hotel.rating %}
+                                                        <i class="fa fa-star"></i>
+                                                    {% endfor %}
+                                                </div>
+                        <div class="product-details__review">
+
+{#                            {% for _ in ''|ljust:hotel.rating %}#}
+{#                                <i class="fa fa-star"></i>#}
+{#                            {% endfor %}#}
+                        </div><!-- /.review-ratings -->
+                        <div class="product-details__divider"></div><!-- /.divider -->
+                        <div class="product-details__excerpt">
+                            <p class="product-details__excerpt-text1">
+                                {{ hotel.short_desc }}
+                            </p>
+                            <p class="product-details__excerpt-text2"><span class="icon-map"> </span>
+                                {{ hotel.location_city }}, {{ hotel.location_strit }}, {{ hotel.location_building }}</p>
+                        </div><!-- /.excerp-text -->
+
+
+                        <div class="product-details__socials">
+                            <h4 class="product-details__socials__title">Поделиться</h4>
+                            <a href="https://twitter.com">
+                                <i class="fab fa-twitter" aria-hidden="true"></i>
+                                <span class="sr-only">Twitter</span>
+                            </a>
+                            <a href="https://facebook.com">
+                                <i class="fab fa-facebook" aria-hidden="true"></i>
+                                <span class="sr-only">Facebook</span>
+                            </a>
+                            <a href="https://pinterest.com">
+                                <i class="fab fa-pinterest-p" aria-hidden="true"></i>
+                                <span class="sr-only">Pinterest</span>
+                            </a>
+                            <a href="https://instagram.com">
+                                <i class="fab fa-instagram" aria-hidden="true"></i>
+                                <span class="sr-only">Instagram</span>
+                            </a>
+                        </div><!-- /.social-share -->
+                    </div>
+                </div>
+            </div>
+            <!-- /.product-details -->
+
+            <div class="product-details__description wow fadeInUp" data-wow-delay="300ms">
+                <h3 class="product-details__description__title">Описание</h3>
+                <p class="product-details__description__text">
+                    {{ hotel.description }}
+                </p>
+            </div>
+
+            <section class="gallery-one gallery-one--page">
+            <div class="container">
+                <div class="row">
+                    {% for img in photos %}
+                    <div class="col-md-6 col-lg-3">
+                        <div class="gallery-one__card">
+                            <img src="{{ img.image.url }}" alt="">
+                            <div class="gallery-one__card__hover">
+                                <a href="{{ img.image.url }}" class="img-popup">
+                                    <span class="gallery-one__card__icon"></span>
+                                </a>
+                            </div><!-- /.gallery-one__card__hover -->
+                        </div><!-- /.gallery-one__card -->
+                    </div><!-- /.col-md-6 col-lg-3 -->
+                    {% endfor %}
+                </div><!-- /.gallery-one__carousel -->
+            </div><!-- /.container-fluid -->
+        </section>
+
+
+            <div><h2> Доступные номера отеля({{ hotel.room_count }}):</h2></div>
+            <section class="villa-page pt-2">
+                <div class="container tabs-box">
+                    <div class="villa-page__info-top">
+                        <!-- villa-show-item -->
+                        <ul class="villa-page__nav tab-buttons list-unstyled">
+                            <li data-tab="#list" class="tab-btn active-btn"><span class="icon-list"></span></li>
+                            <li data-tab="#grid" class="tab-btn"><span class="icon-grid"></span></li>
+                        </ul><!-- villa-tab -->
+                    </div>
+                    <div class="tabs-content">
+                        <div class="tab active-tab" id="list">
+                            <div class="row gutter-y-30">
+                                {% for room in rooms %}
+                                    <div class="col-lg-12">
+                                        <div class="villa-card-list villa-card-list--full-width wow fadeInUp"
+                                             data-wow-delay="100ms">
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-lg-3">
+                                                    <div class="villa-card-list__image">
+
+                                                           {% if room.logo_room %}
+                                                    <img src="{{ room.logo_room.url }}" alt='{{ room.title }}'/>
+
+                                                {% else %}
+                                                    <img src="{% static 'hotels/images/nomer.png' %}"
+                                                         alt='{{ room.title }}'/>
+                                                {% endif %}
+
+
+                                                        <!-- /.villa-card-list__label -->
+                                                    </div><!-- /.villa-card-list__image -->
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <div class="villa-card-list__content">
+                                                        <p class="villa-card-list__address">
+                                                            <span class="icon-bed"> </span>
+                                                            {{ room.room_type }}
+                                                        </p>
+                                                        <h3 class="villa-card-list__title">
+                                                            <a href="{% url 'room_detail' hotel.slug room.slug %}">{{ room.title }}</a>
+                                                        </h3>
+                                                        <!-- /.villa-card-list__title -->
+                                                        <div class="villa-card-list__price">{{ room.price_per_night }}
+                                                            <span class="villa-card-list__price__shift">/ ночь</span>
+                                                        </div>
+                                                        <p>{{ room.short_desc }}</p>
+                                                        <ul class="list-unstyled villa-card-list__meta">
+                                                            <li><span class="icon-bath"></span>{{ room.baths }} </li>
+                                                            <li><span class="icon-users"></span>{{ room.max_guest }} гостей</li>
+                                                            {% if room.wifi %}
+                                                            <li><span class="icon-recommend"></span>free WIFI</li>
+                                                            {% endif %}
+                                                            {% if room.parking %}
+                                                            <li><span class="theme-icon-when-auto"></span>парковка</li>
+                                                            {% endif %}
+                                                        </ul><!-- /.list-unstyled villa-card-list__meta -->
+                                                    </div><!-- /.villa-card-list__content -->
+                                                </div>
+                                            </div>
+                                        </div><!-- /.villa-card-list -->
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <!-- вид2 -->
+                        <div class="tab" id="grid">
+                            <div class="row gutter-y-30">
+                                {% for room in rooms %}
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="villa-card wow fadeInUp" data-wow-delay="100ms">
+                                            <div class="villa-card__image">
+                                                {% if room.logo_room %}
+                                                    <img src="{{ room.logo_room.url }}" alt='{{ room.title }}'/>
+
+
+                                                {% else %}
+                                                    <img src="{% static 'hotels/images/nomer.png' %}"
+                                                         alt='{{ room.title }}'/>
+                                                {% endif %}
+
+                                            </div><!-- /.villa-card__image -->
+                                            <div class="villa-card__content">
+                                                {#                                                    <div class="villa-card__ratings">#}
+                                                {#                                                        {% for _ in ''|ljust:hotel.rating %}#}
+                                                {#                                                            <i class="fa fa-star"></i>#}
+                                                {#                                                        {% endfor %}#}
+                                                {#                                                    </div>#}
+                                                <p><span class="icon-bed"> </span>
+                                                    {{ room.room_type }}
+                                                </p>
+                                                <h3 class="villa-card__title"><a
+                                                        href="{% url 'room_detail' hotel.slug room.slug %}">{{ room.title }}</a>
+                                                </h3>
+                                                <ul class="list-unstyled villa-card__meta">
+                                                    <li><span class="icon-bath"></span>2 baths</li>
+                                                    <li><span class="icon-users"></span>12 guests</li>
+
+                                                </ul><!-- /.list-unstyled villa-card__meta -->
+                                            </div><!-- /.villa-card__content -->
+                                        </div><!-- /.villa-card -->
+                                    </div><!-- /.item -->
+                                {% endfor %}
+                            </div><!-- /.row -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends '.\base.html' %}
+{% load static %}
+
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+{% for city in city_list %}
+
+    {{ city.title }}
+    {% for hotel in hotel_list %}
+        {{ hotel.t }}
+        {% endfor %}
+{% endfor %}
+
+{% endblock %}

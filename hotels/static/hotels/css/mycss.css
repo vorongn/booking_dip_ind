@@ -1,0 +1,8 @@
+.background-gray {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.photo-gallery img, .lightbox-img {
+	width:100%;
+
+}

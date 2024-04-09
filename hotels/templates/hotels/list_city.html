@@ -1,0 +1,10 @@
+
+{% for city in cities %}
+
+    {% if city.id == city_select %}
+        <li class="selected">!{{ city.title }}</li>
+        {% else %}
+        <li><a href="{{ city.get_absolute_url }}">{{ city.title }}</a></li>
+    {% endif %}
+
+{% endfor %}
